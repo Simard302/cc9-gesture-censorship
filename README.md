@@ -4,4 +4,5 @@
 - Adam Simard
 - Eric Huang
 - Zuhayr Mahmood
-- Not Kevin
+- Daniel Cho
+- Kevin Wang
