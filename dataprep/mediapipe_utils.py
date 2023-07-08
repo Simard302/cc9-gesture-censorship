@@ -40,6 +40,42 @@ LANDMARK_LOOKUP = [
   'PINKY_FINGER_TIP',
 ]
 
+def calc_blur(image, data):
+    if len(data)<1: return None
+    landmarks = data[0]
+    xlen = len(image)
+    ylen = len(image[0])
+    c = [(v.x, v.y) for v in landmarks]
+    maxs = np.amax(np.array(c), axis=0)
+    mins = np.amin(np.array(c), axis=0)
+
+    min_pix = [int(max(xlen*mins[1]-xlen//10, 0)), int(max(ylen*mins[0]-ylen//10, 0))]
+    max_pix = [int(min(xlen*maxs[1]+xlen//10, ylen)), int(min(ylen*maxs[0]+ylen//10, ylen))]
+
+    blur = cv2.blur(image, (100, 100), 5)
+
+    from scipy.stats import kde
+
+    landmarks = data[0]
+    x = [v.x for v in landmarks]
+    y = [v.y for v in landmarks]
+    k = kde.gaussian_kde([x, y])
+    xi, yi = np.mgrid[0:1:xlen//5*1j, 0:1:ylen//5*1j]
+    zi = k(np.vstack([yi.flatten(), xi.flatten()]))
+
+    scores = np.greater(zi.reshape(xi.shape), 1.5)
+
+    return blur, scores, min_pix, max_pix
+
+def apply_blur(image, blurData):
+    blur, scores, min_pix, max_pix = blurData
+    for x in range(min_pix[0], max_pix[0]):
+        for y in range(min_pix[1], max_pix[1]):
+            if scores[x//5][y//5]>0:
+                image[x,y] = blur[x,y]
+
+    return image
+
 def get_distance(data, name1, name2):
   if len(data)<1: return None
   landmarks = data[0]
