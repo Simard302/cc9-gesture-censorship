@@ -21,7 +21,8 @@ fileInput.onchange = ({target})=>{
 
 function uploadFile(name){
   let xhr = new XMLHttpRequest();
-  xhr.open("POST", "/php/upload.php");
+  let response = xhr.open("POST", "/api/upload");
+  console.log(response); //debug
   xhr.upload.addEventListener("progress", ({loaded, total}) =>{
     let fileLoaded = Math.floor((loaded / total) * 100);
     let fileTotal = Math.floor(total / 1000);
