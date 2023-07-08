@@ -15,18 +15,30 @@ fileInput.onchange = ({target})=>{
       let splitName = fileName.split('.');
       fileName = splitName[0].substring(0, 13) + "... ." + splitName[1];
     }
-    uploadFile(fileName);
+    if (file.size >= 1073741824) {
+      console.log("File is too large");
+      doNotUploadFile(fileName, file.size);
+    }else{
+      uploadFile(fileName);
+    }
   }
 }
 
 function uploadFile(name){
+  console.log("Running Upload");
+
   let xhr = new XMLHttpRequest();
-  let response = xhr.open("POST", "/api/upload");
-  console.log(response); //debug
+  console.log("Created Request");
+
+  xhr.open("POST", "api/upload"); // opens request
+  console.log("POSTED");
+
   xhr.upload.addEventListener("progress", ({loaded, total}) =>{
+
     let fileLoaded = Math.floor((loaded / total) * 100);
     let fileTotal = Math.floor(total / 1000);
     let fileSize;
+
     (fileTotal < 1024) ? fileSize = fileTotal + " KB" : fileSize = (loaded / (1024*1024)).toFixed(2) + " MB";
     let progressHTML = `<li class="row">
                           <i class="fas fa-file-alt"></i>
@@ -58,6 +70,26 @@ function uploadFile(name){
       uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
     }
   });
-  let data = new FormData(form);
-  xhr.send(data);
+  let data = new FormData(form); //FormData is an object to easily send form data
+  xhr.send(data); //sending form data as the body to the request
+}
+
+function doNotUploadFile (name, fileSize){
+  progressArea.innerHTML = "";
+  uploadedArea.classList.add("onprogress");
+
+  fileSize = (fileSize / (1024*1024*1024)).toFixed(2) + " GB";
+  let uploadedHTML = `<li class="row">
+                        <div class="content upload">
+                          <i class="fas fa-file-alt"></i>
+                          <div class="details">
+                            <span class="name">${name} • Not Uploaded<br>File too large. Max 1 GB.</span>
+                            <span class="size">${fileSize}</span>
+                          </div>
+                        </div>
+                        <i class="fas fa-times"></i>
+                      </li>`
+  uploadedArea.classList.remove("onprogress");
+  uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
+  console.log("Created File too large prompt")
 }
