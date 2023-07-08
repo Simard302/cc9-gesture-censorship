@@ -7,7 +7,7 @@ from support_vec_class import get_model
 
 # CONFIG
 MAX_BLUR = 1
-FILTER_CLASS = ['Z', 'Y', 'C']
+FILTER_CLASS = ['Z', 'Y', '2', 'W']
 
 
 # Create detector and video capture
