@@ -15,38 +15,24 @@ fileInput.onchange = ({target})=>{
       let splitName = fileName.split('.');
       fileName = splitName[0].substring(0, 13) + "... ." + splitName[1];
     }
-    uploadFile(fileName);
+    if (file.size >= 1073741824) {
+      console.log("File is too large");
+      doNotUploadFile(fileName, file.size);
+    }else{
+      uploadFile(fileName);
+    }
   }
 }
 
 function uploadFile(name){
-
-  // let fileInput = document.getElementById("file-input");
-  // let file = fileInput.files[0]; // Get the selected file
-
-  //   if (file.size >= 1073741824) {
-  //     progressArea.innerHTML = "";
-  //     uploadedArea.classList.add("onprogress");
-      
-  //     progressArea.innerHTML = progressHTML;
-  //     let uploadedHTML = `<li class="row">
-  //                           <div class="content upload">
-  //                             <i class="fas fa-file-alt"></i>
-  //                             <div class="details">
-  //                               <span class="name">${files[i].name}: File size exceeds 1GB. File not uploaded.</span>
-  //                               <span class="size">${fileSize}</span>
-  //                             </div>
-  //                           </div>
-  //                           <i class="fa-solid fa-x"></i>
-  //                         </li>`
-  //     uploadedArea.classList.remove("onprogress");
-  //     uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
-  // }
-  
-
+  console.log("Running Upload");
 
   let xhr = new XMLHttpRequest();
-  xhr.open("POST", "api/upload");
+  console.log("Created Request");
+
+  xhr.open("POST", "api/upload"); // opens request
+  console.log("POSTED");
+
   xhr.upload.addEventListener("progress", ({loaded, total}) =>{
 
     let fileLoaded = Math.floor((loaded / total) * 100);
@@ -84,5 +70,26 @@ function uploadFile(name){
       uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
     }
   });
+  let data = new FormData(form); //FormData is an object to easily send form data
+  xhr.send(data); //sending form data as the body to the request
 }
 
+function doNotUploadFile (name, fileSize){
+  progressArea.innerHTML = "";
+  uploadedArea.classList.add("onprogress");
+
+  fileSize = (fileSize / (1024*1024*1024)).toFixed(2) + " GB";
+  let uploadedHTML = `<li class="row">
+                        <div class="content upload">
+                          <i class="fas fa-file-alt"></i>
+                          <div class="details">
+                            <span class="name">${name} • Not Uploaded<br>File too large. Max 1 GB.</span>
+                            <span class="size">${fileSize}</span>
+                          </div>
+                        </div>
+                        <i class="fas fa-times"></i>
+                      </li>`
+  uploadedArea.classList.remove("onprogress");
+  uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
+  console.log("Created File too large prompt")
+}
