@@ -1,5 +1,9 @@
-runtime: python310
-entrypoint: gunicorn main.wsgi:application --bind 0.0.0.0:8000
+runtime: python
+runtime_config:
+  operating_system: "ubuntu22"
+  runtime_verson: "3.10"
+entrypoint: gunicorn main.wsgi:application --bind 0.0.0.0:$PORT
+env: flex
 
 handlers:
   - url: /static
