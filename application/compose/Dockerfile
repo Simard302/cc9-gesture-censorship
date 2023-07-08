@@ -2,6 +2,7 @@
 FROM --platform=linux/amd64 ubuntu:22.04
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV DEBUG=1
 
 RUN apt-get update \
     && apt-get install --no-install-recommends -y build-essential \
@@ -10,7 +11,13 @@ RUN apt-get update \
 COPY ./requirements.txt /requirements.txt
 RUN pip install --no-cache-dir -r /requirements.txt
 
+COPY . /app
+
 COPY ./compose/start /start
 RUN sed -i 's/\r$//g' /start \
     && chmod +x /start
 WORKDIR /app
+
+EXPOSE 8000
+
+CMD ["/start"]

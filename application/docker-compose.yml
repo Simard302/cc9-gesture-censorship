@@ -3,13 +3,7 @@ services:
     build:
       context: .
       dockerfile: ./compose/Dockerfile
-    command: /start
     image: app_web
     container_name: app_web
-    volumes:
-      - .:/app
     ports:
       - "8000:8000"
-    working_dir: /app
-    environment:
-      - DEBUG=1
