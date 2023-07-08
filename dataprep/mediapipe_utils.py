@@ -2,6 +2,7 @@
 
 from mediapipe import solutions
 from mediapipe.framework.formats import landmark_pb2
+import mediapipe as mp
 from math import sqrt
 import numpy as np
 import cv2
@@ -75,6 +76,20 @@ def apply_blur(image, blurData):
                 image[x,y] = blur[x,y]
 
     return image
+
+def featurize(jpg, detector):
+    img = cv2.imread(jpg)
+
+    image = mp.Image(image_format=mp.ImageFormat.SRGB, data=img)
+    detection_result = detector.detect(image)
+    if len(detection_result.hand_world_landmarks)<1: return None
+    features = []
+    for i in range(0, 21):
+        name_landmark = get_landmark_name(i)
+        for k in range(0, 21):
+            distance = get_distance(detection_result.hand_world_landmarks, name_landmark, get_landmark_name(k))
+            features.append(distance)
+    return features
 
 def get_distance(data, name1, name2):
   if len(data)<1: return None

@@ -2,10 +2,12 @@ import cv2
 import mediapipe as mp
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
-from mediapipe_utils import get_distance, calc_blur, apply_blur, draw_landmarks_on_image
+from mediapipe_utils import get_distance, calc_blur, apply_blur, draw_landmarks_on_image, get_landmark_name
+from support_vec_class import get_model
 
 # CONFIG
 MAX_BLUR = 1
+FILTER_CLASS = ['Z', 'Y', 'C']
 
 
 # Create detector and video capture
@@ -17,6 +19,8 @@ base_options = python.BaseOptions(model_asset_path='dataprep/hand_landmarker.tas
 options = vision.HandLandmarkerOptions(base_options=base_options,
                                         num_hands=2)
 detector = vision.HandLandmarker.create_from_options(options)
+model = get_model()
+
 
 # Loop over video feed
 blurCounter = 0
@@ -33,18 +37,27 @@ while True:
     text = None
     blur = False
     # Calculate the distance, inc blur accordingly
-    distance = get_distance(detection_result.hand_world_landmarks, 'INDEX_FINGER_TIP', 'THUMB_TIP')
-    if distance is not None and (1/distance)**2 > 200:
-        print((1/distance)**2)
-        text = 'OK!'    # Text displayed above hand
-        blur = True
+    #distance = get_distance(detection_result.hand_world_landmarks, 'INDEX_FINGER_TIP', 'THUMB_TIP')
+    if len(detection_result.hand_world_landmarks)>0:
+        features = []
+        for i in range(0, 21):
+            name_landmark = get_landmark_name(i)
+            for k in range(0, 21):
+                distance = get_distance(detection_result.hand_world_landmarks, name_landmark, get_landmark_name(k))
+                features.append(float(distance))
+        classification = model.predict([features])[0]
+        #if distance is not None and (1/distance)**2 > 200:
+        if classification in FILTER_CLASS:
+            #print((1/distance)**2)
+            text = classification    # Text displayed above hand
+            blur = True
 
-        if blurCounter == 0:    # Only calculate blur every MAX_BLUR iterations
-            blurData = calc_blur(annotated_image, detection_result.hand_landmarks)
-        elif blurCounter > MAX_BLUR:
-            blurCounter = 0
-        else:
-            blurCounter +=1
+            if blurCounter == 0:    # Only calculate blur every MAX_BLUR iterations
+                blurData = calc_blur(annotated_image, detection_result.hand_landmarks)
+            elif blurCounter > MAX_BLUR:
+                blurCounter = 0
+            else:
+                blurCounter +=1
     else:
         blur = 0
     
