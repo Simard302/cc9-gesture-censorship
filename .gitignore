@@ -1,3 +1,6 @@
 .vscode/
 application/static
-dataprep/data
+application/tempFile.txt
+__pycache__/
+*.py[cod]
+*$py.class

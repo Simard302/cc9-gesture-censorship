@@ -1,0 +1,21 @@
+<IMAGE WIDTH="360" HEIGHT="480" COLOR="TRUE">
+	<hand>
+		<FeaturePoint x="116" y="246" category="Wrist" type="WristThumb"/>
+		<FeaturePoint x="46" y="202" category="Wrist" type="WristPinky"/>
+		<FeaturePoint x="172" y="152" category="Thumb" type="Knuckle1"/>
+		<FeaturePoint x="211" y="137" category="Thumb" type="Knuckle2"/>
+		<FeaturePoint x="239" y="111" category="Thumb" type="Fingertip"/>
+		<FeaturePoint x="166" y="133" category="Thumb" type="ConcavePoint"/>
+		<FeaturePoint x="103" y="70" category="MiddleFinger" type="Knuckle1"/>
+		<FeaturePoint x="112" y="83" category="RingFinger" type="Knuckle1"/>
+		<FeaturePoint x="204" y="73" category="RingFinger" type="Knuckle2"/>
+		<FeaturePoint x="249" y="70" category="RingFinger" type="Knuckle3"/>
+		<FeaturePoint x="282" y="72" category="RingFinger" type="Fingertip"/>
+		<FeaturePoint x="140" y="90" category="RingFinger" type="ConcavePoint"/>
+		<FeaturePoint x="127" y="109" category="Pinky" type="Knuckle1"/>
+		<FeaturePoint x="190" y="92" category="Pinky" type="Knuckle2"/>
+		<FeaturePoint x="222" y="84" category="Pinky" type="Knuckle3"/>
+		<FeaturePoint x="254" y="82" category="Pinky" type="Fingertip"/>
+	</hand>
+	<hand/>
+</IMAGE>

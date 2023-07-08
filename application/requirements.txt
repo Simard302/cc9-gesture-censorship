@@ -5,3 +5,4 @@ Shapely==2.0.1
 scikit-image==0.21.0
 numpy==1.25.0
 mediapipe==0.10.1
+matplotlib==3.7.2
