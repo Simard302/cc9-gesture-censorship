@@ -21,8 +21,7 @@ fileInput.onchange = ({target})=>{
 
 function uploadFile(name){
   let xhr = new XMLHttpRequest();
-  let response = xhr.open("POST", "/api/upload");
-  console.log(response); //debug
+  xhr.open("POST", "/api/upload");
   xhr.upload.addEventListener("progress", ({loaded, total}) =>{
     let fileLoaded = Math.floor((loaded / total) * 100);
     let fileTotal = Math.floor(total / 1000);
@@ -58,6 +57,4 @@ function uploadFile(name){
       uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
     }
   });
-  let data = new FormData(form);
-  xhr.send(data);
 }

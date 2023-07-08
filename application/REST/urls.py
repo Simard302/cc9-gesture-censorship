@@ -1,5 +1,5 @@
 from django.urls import path, include
-from REST.views import fakedata, upload
+from REST.views import fakedata, RestCtrl
 
 urlpatterns = [
     path('test', fakedata.fake_data),
@@ -7,5 +7,8 @@ urlpatterns = [
     path('eric_data/<int:mynum>', fakedata.my_data),
 
     ###
-    path('upload',upload.main),
+    path('about',RestCtrl.about),
+    path('contact',RestCtrl.contact),
+    path('index',RestCtrl.index),
+    path('upload',RestCtrl.upload),
 ]
