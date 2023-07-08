@@ -2,7 +2,7 @@
 
 # Contributors 
 - Adam Simard
-- Eric Huang
 - Zuhayr Mahmood
+- Eric Huang
 - Daniel Cho
 - Kevin Wang
