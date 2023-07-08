@@ -5,23 +5,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Kevin's Fat</title>
         
-        <!-- Update these with your own fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,900|Source+Sans+Pro:300,900&display=swap" rel="stylesheet">
-        
         <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
         
     </head>
     <body>
-        <header>
-        </header>
-        <section>
-            <div class="container">
-                <h1>Kevin Dieting Plan</h1>
-                <button class="btn" onclick="showAlert()">Click Me</button>
-              </div>
-        </section>
-        <footer>
-        </footer>
+        <div class="wrapper">
+            <header>File Uploader</header>
+            <form action="#">
+                <input class="file-input" type="file" name="file" hidden>
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Browse File to Upload</p>
+            </form>
+            <section class="progress-area">
+            </section>
+            <section class="uploaded-area">
+            </section>
+            <!-- <section>
+                <div class="container">
+                    <h1>Kevin Dieting Plan</h1>
+                    <button class="btn" onclick="showAlert()">Click Me</button>
+                </div>
+            </section> -->
+            <footer>
+            </footer>
+        </div>
         <script src="/static/js/script.js"></script>
     </body>
 </html>
+
+  
