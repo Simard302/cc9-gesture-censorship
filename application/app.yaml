@@ -1,0 +1,8 @@
+runtime: python310
+entrypoint: gunicorn main.wsgi:application --bind 0.0.0.0:8000
+
+handlers:
+  - url: /static
+    static_dir: static/
+  - url: /.*
+    script: auto

@@ -7,7 +7,7 @@ SECRET_KEY = os.environ.get(
     "SECRET_KEY", "1234567890"
 )
 
-DEBUG = True
+DEBUG = bool(int(os.environ.get('DEBUG', 0)))
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1, localhost").split(" ")
 
@@ -52,6 +52,8 @@ TEMPLATES = [
         },
     },
 ]
+
+WSGI_APPLICATION = "main.wsgi.application"
 
 AUTH_PASSWORD_VALIDATORS = [
     {
