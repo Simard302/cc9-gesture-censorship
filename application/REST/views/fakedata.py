@@ -10,9 +10,8 @@ def fake_data(request):
 def my_data(request, mynum=None):
     data = {}
 
-    if request.method == 'GET':
-        data['name'] = request.GET.get('name')
-    else:
+    data['name'] = request.GET.get('name')
+    if request.method == 'POST':
         data['body'] = request.data
     
     if mynum is not None:
