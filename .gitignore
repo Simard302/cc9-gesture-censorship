@@ -1,6 +1,7 @@
 .vscode/
 application/static
 application/tempFile.txt
+application/tempReq.txt
 __pycache__/
 *.py[cod]
 *$py.class
