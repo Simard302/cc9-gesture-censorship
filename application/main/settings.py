@@ -12,6 +12,7 @@ DEBUG = bool(int(os.environ.get('DEBUG', 0)))
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -20,7 +21,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "Frontend",
-    "REST"
+    "REST",
+    'channels',
+    'streamapp',
 ]
 
 MIDDLEWARE = [
@@ -84,3 +87,11 @@ STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 1073741824 #1GB
+
+
+ASGI_APPLICATION = 'application.routing.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
