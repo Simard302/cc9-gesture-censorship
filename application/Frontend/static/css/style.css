@@ -1,45 +1,39 @@
 /* SITE WIDE - GENERAL */
 
 /* Import google fonts - Poppins */
-/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: Poppins, sans-serif;
-} */
+}
 
 /* FILE SPECIFIC */
 
 
-/* li{
+li{
   display: inline;
   font-family: Poppins, sans-serif;
-  padding-top: 20px;
-}
-
-.fart{
-  text-align: left;
-}
-
-a{
-  padding: 100px;
 }
 
 h1{
   text-align: left;
-
+  padding-top: 5%;
+  padding-left: 10%;
+  color: #49C6DD;
+  font-size: 32px;
 }
 
 .nav-element{
   text-decoration: none;
   color: black;
-  padding: 1px;
+  padding: 10px;
   
 }
 
 .nav-element:hover{
-  color: red;
+  color: #49C6DD;
 }
 
 #navbar-list{
@@ -47,4 +41,4 @@ h1{
   list-style-type: none;
   padding-top: 100px;
 }
- */
+
