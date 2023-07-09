@@ -33,7 +33,7 @@ def upload(request):
             status=status.HTTP_422_UNPROCESSABLE_ENTITY
         )
 
-    with open("tempFile.txt",'wb+') as f:
+    with open("tempVid.mp4",'wb+') as f:
         f.write(request.body)
 
     return Response({'Upload Status': 'Complete'}, status=status.HTTP_200_OK)
