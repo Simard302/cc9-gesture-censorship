@@ -4,10 +4,8 @@ from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 import csv, os
 
-def get_model():
-    DIR = 'dataprep/data'
-
-    csvFile = open(os.path.join(DIR, 'training','features.csv'), 'r')
+def get_model(trainset):
+    csvFile = open(trainset, 'r')
     reader = csv.reader(csvFile)
     classification = []
     data = []

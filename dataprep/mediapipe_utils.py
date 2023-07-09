@@ -70,8 +70,8 @@ def calc_blur(image, data):
 
 def apply_blur(image, blurData):
     blur, scores, min_pix, max_pix = blurData
-    for x in range(min_pix[0], max_pix[0]):
-        for y in range(min_pix[1], max_pix[1]):
+    for x in range(min_pix[0], max_pix[0]-1):
+        for y in range(min_pix[1], max_pix[1]-1):
             if scores[x//5][y//5]>0:
                 image[x,y] = blur[x,y]
 

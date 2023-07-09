@@ -1,4 +1,4 @@
-import cv2
+import cv2, os
 import mediapipe as mp
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
@@ -7,7 +7,8 @@ from support_vec_class import get_model
 
 # CONFIG
 MAX_BLUR = 1
-FILTER_CLASS = ['Z', 'Y', '2', 'W']
+FILTER_CLASS = ['MF']
+TRAIN_SET = os.path.join('dataprep/data', 'training','features_middlefinger.csv')
 
 
 # Create detector and video capture
@@ -19,7 +20,7 @@ base_options = python.BaseOptions(model_asset_path='dataprep/hand_landmarker.tas
 options = vision.HandLandmarkerOptions(base_options=base_options,
                                         num_hands=2)
 detector = vision.HandLandmarker.create_from_options(options)
-model = get_model()
+model = get_model(TRAIN_SET)
 
 
 # Loop over video feed
@@ -49,26 +50,26 @@ while True:
         #if distance is not None and (1/distance)**2 > 200:
         if classification in FILTER_CLASS:
             #print((1/distance)**2)
-            text = classification    # Text displayed above hand
             blur = True
 
             if blurCounter == 0:    # Only calculate blur every MAX_BLUR iterations
-                blurData = calc_blur(annotated_image, detection_result.hand_landmarks)
+                blurData = calc_blur(image, detection_result.hand_landmarks)
             elif blurCounter > MAX_BLUR:
                 blurCounter = 0
             else:
                 blurCounter +=1
+        
+        image = draw_landmarks_on_image(image, detection_result, text_override=classification)
     else:
-        blur = 0
+        blurCounter = 0
     
     # Draw lines and landmarks on hand
-    annotated_image = draw_landmarks_on_image(image, detection_result, text_override=text)
 
     # If blur, apply blur to image
     if blur:
-        annotated_image = apply_blur(annotated_image, blurData)
+        image = apply_blur(image, blurData)
     
-    cv2.imshow('frame', annotated_image)
+    cv2.imshow('frame', image)
     cv2.waitKey(1)
 
 cap.release()
