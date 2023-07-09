@@ -10,4 +10,5 @@ urlpatterns = [
     path("index", nav.index),
     path("stream", nav.streamPage),
     path("upload", nav.uploadPage),
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

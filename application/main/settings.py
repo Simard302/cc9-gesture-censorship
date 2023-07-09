@@ -12,6 +12,7 @@ DEBUG = True
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1, localhost").split(" ")
 
 INSTALLED_APPS = [
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -21,6 +22,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "Frontend",
     "REST"
+    'channels',
+    'django_eventstream',
 ]
 
 MIDDLEWARE = [
@@ -31,6 +34,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'django_grip.GripMiddleware',
 ]
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
@@ -82,3 +86,5 @@ STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 1073741824 #1GB
+
+ASGI_APPLICATION = 'application.asgi.application'

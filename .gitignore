@@ -4,3 +4,4 @@ application/tempFile.txt
 __pycache__/
 *.py[cod]
 *$py.class
+codeworkspace/
