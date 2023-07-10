@@ -4,8 +4,8 @@ import mediapipe as mp
 import numpy as np
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
-from REST.calc.utils import get_distance, calc_blur, apply_blur, draw_landmarks_on_image, get_landmark_name
-from REST.calc.svm import get_model
+from Frontend.calc.utils import get_distance, calc_blur, apply_blur, draw_landmarks_on_image, get_landmark_name
+from Frontend.calc.svm import get_model
 import multiprocessing
 from queue import Queue
 import tempfile

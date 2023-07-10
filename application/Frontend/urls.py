@@ -9,5 +9,5 @@ urlpatterns = [
     path("contact", nav.contact),
     path("index", nav.index),
     path("stream", nav.streamPage),
-    path("upload", nav.uploadPage),
+    path("upload", nav.upload_stream, name='transform_video'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
