@@ -3,15 +3,10 @@ fileInput = document.querySelector(".file-input"),
 progressArea = document.querySelector(".progress-area"),
 uploadedArea = document.querySelector(".uploaded-area");
 
-// window.addEventListener("load", () => {
-//   // playButton.style.display = "none";
-//   // fileIcon.style.display = "none";
-// });
 
 form.addEventListener("click", () =>{
   fileInput.click();
 });
-
 
 
 fileInput.onchange = ({target})=>{
@@ -60,6 +55,7 @@ function uploadFile(name){
                             </div>
                           </div>
                         </li>`;
+    uploadedArea.innerHTML = ""; //uncomment this line if you don't want to show upload history
     uploadedArea.classList.add("onprogress");
     progressArea.innerHTML = progressHTML;
     if (loaded == total) {
@@ -75,7 +71,8 @@ function uploadFile(name){
                             <i class="fas fa-download download-icon"></i>
                           </li>`;
       uploadedArea.classList.remove("onprogress");
-      uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
+      uploadedArea.innerHTML = uploadedHTML; //uncomment this line if you don't want to show upload history
+      // uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
     
       // Add a click event listener to the download icon
       const downloadIcon = uploadedArea.querySelector(".download-icon");
