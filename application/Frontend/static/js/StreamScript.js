@@ -16,7 +16,7 @@ function startup(){
     console.log("Stream Set");
 
     // Start streaming to Django REST API
-    var apiEndpoint = 'api/upload';
+    var apiEndpoint = 'api/stream';
     var mediaRecorder = new MediaRecorder(stream);
     var frameCount = 0;
     var chunks = [];
