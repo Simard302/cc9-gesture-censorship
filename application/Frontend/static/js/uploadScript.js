@@ -71,6 +71,39 @@ function uploadFile(name){
     }
   });
   let data = new FormData(form); //FormData is an object to easily send form data
+  xhr.responseType = 'blob';
+  xhr.onreadystatechange = function() {
+    console.log('Received file');
+    if (xhr.readyState === XMLHttpRequest.DONE){
+        if (xhr.status == 200) {
+            var blob = this.response;
+        
+            // Create a temporary link and trigger the file download
+            var downloadLink = document.createElement('a');
+            downloadLink.href = window.URL.createObjectURL(blob);
+            downloadLink.download = 'video.mp4'; // Set the desired filename
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+
+            const videoElement = document.createElement('video');
+            const sourceElement = document.createElement('source');
+            sourceElement.src = window.URL.createObjectURL(blob);
+            sourceElement.type = 'video/mp4';
+
+            videoElement.appendChild(sourceElement);
+            videoElement.autoplay = true;
+            videoElement.controls = true;
+            videoElement.preload = 'auto';
+            videoElement.width = 320;
+            videoElement.height = 180;
+
+            document.body.children[1].appendChild(videoElement);
+            videoElement.load();
+        }
+    }
+  };
+
   xhr.send(data); //sending form data as the body to the request
 }
 
