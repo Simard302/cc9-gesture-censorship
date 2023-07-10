@@ -6,6 +6,13 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+
+::selection{
+  color: #fff;
+  background: #6990F2;
+}
+
+/* Body */
 body{
   display: flex;
   align-items: center;
@@ -14,10 +21,7 @@ body{
   background: #6990F2;
 }
 
-::selection{
-  color: #fff;
-  background: #6990F2;
-}
+/* Wrapper */
 .wrapper{
   width: 430px;
   background: #fff;
@@ -42,6 +46,13 @@ body{
   border-radius: 5px;
   border: 2px dashed #6990F2;
 }
+.wrapper a {
+  color: rgb(4, 116, 195); /* Set the desired color */
+  text-decoration: underline; /* Add underline */
+  display:inline;
+}
+
+
 form :where(i, p){
   color: #6990F2;
 }
@@ -93,6 +104,8 @@ section .details span{
   background: #6990F2;
   border-radius: inherit;
 }
+
+/* Uploaded area */
 .uploaded-area{
   max-height: 232px;
   overflow-y: scroll;
@@ -119,7 +132,6 @@ section .details span{
 .uploaded-area i.fa-check{
   font-size: 16px;
 }
-
 .uploaded-area i.fa-times{
   font-size: 16px;
 }

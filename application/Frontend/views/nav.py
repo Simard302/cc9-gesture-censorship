@@ -6,5 +6,7 @@ def about(response):
     return render(response, "about.html")
 def contact(response):
     return render(response, "contact.html")
+def streamPage(response):
+    return render(response, "stream-page.html")
 def uploadPage(response):
     return render(response, "upload-page.html")

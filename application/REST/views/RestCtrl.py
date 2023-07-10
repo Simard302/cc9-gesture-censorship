@@ -1,6 +1,6 @@
 from rest_framework import status
 from rest_framework.response import Response
-from django.http import HttpResponse
+from django.http import HttpResponse, FileResponse
 from rest_framework.decorators import api_view
 from django import forms
 from sys import getsizeof
@@ -8,6 +8,7 @@ from REST.calc.video import VideoCensor
 import os
 import cv2
 import tempfile
+videoPath = "tempFile.mp4"
 
 
 @api_view(['GET'])
@@ -30,7 +31,8 @@ class UploadFileForm(forms.Form):
 
 @api_view(['POST','GET'])
 def upload(request):
-    if request.method == 'GET': return Response(None, status=status.HTTP_204_NO_CONTENT)
+    if request.method == 'GET': 
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
 
     print("Received something")
 
@@ -63,3 +65,18 @@ def upload(request):
     res = HttpResponse(byte, status=status.HTTP_200_OK, content_type='application/octet-stream')
     res['Content-Disposition'] = 'attachment; filename="video.mp4"'  # Set the desired filename
     return res
+
+@api_view(["GET"])
+def uploadResponse(request):
+    
+
+    with open(videoPath, 'rb+') as f:
+        print("This is what I'm sending back:")
+        print(bool(f.read()))
+
+    response = FileResponse(open(videoPath, 'rb+'))
+    response["Content-Type"] = "video/mp4"
+    response['Content-Disposition'] = f'inline; filename={videoPath}'
+    response['Content-Disposition'] = 'attachment; filename="{0}"'.format(os.path.basename(videoPath))
+
+    return response

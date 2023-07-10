@@ -1,5 +1,5 @@
 from django.urls import path, include
-from REST.views import fakedata, RestCtrl
+from REST.views import fakedata, RestCtrl, StreamCtrl
 
 urlpatterns = [
     # path('test', fakedata.fake_data),
@@ -11,4 +11,6 @@ urlpatterns = [
     path('contact',RestCtrl.contact),
     path('index',RestCtrl.index),
     path('upload',RestCtrl.upload),
+    path('uploadResponse',RestCtrl.uploadResponse),
+    path('stream',StreamCtrl.stream),
 ]

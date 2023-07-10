@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Blur App</title>
+        
+        <!-- Update these with your own fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,900|Source+Sans+Pro:300,900&display=swap" rel="stylesheet">
+        
+        <link rel="stylesheet" type="text/css" href="/static/css/UploadPage.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/StreamPage.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+        
+    </head>
+    <body>
+        <div class="nav-wrapper">
+        </div>
+        <div class="wrapper">
+            <nav>
+                <ul>
+                    <a href="upload">Upload File</a>
+                </ul>
+                <ul>
+                    <a href="index">Back</a>
+                </ul>
+            </nav>
+            <header>Stream</header>
+            <!-- <video id="video" autoplay>Video stream not available</video>
+
+            <button id="startButton">Start Camera</button> -->
+            <video id="video" autoplay>Video stream not available</video>
+            <div id="videoContainer"></div>
+            <!-- <form action="#" method="post" enctype="multipart/form-data">
+                <video id="video" autoplay>Video stream not available</video>
+                <div id="videoContainer"></div>
+            </form> -->
+        </div>
+        <script aync src="/static/js/StreamScript.js"></script>
+
+    </body>
+</html>

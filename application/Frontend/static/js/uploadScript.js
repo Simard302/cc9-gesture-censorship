@@ -3,9 +3,11 @@ fileInput = document.querySelector(".file-input"),
 progressArea = document.querySelector(".progress-area"),
 uploadedArea = document.querySelector(".uploaded-area");
 
+
 form.addEventListener("click", () =>{
   fileInput.click();
 });
+
 
 fileInput.onchange = ({target})=>{
   let file = target.files[0];
@@ -33,6 +35,7 @@ function uploadFile(name){
   xhr.open("POST", "api/upload"); // opens request
   console.log("POSTED");
 
+
   xhr.upload.addEventListener("progress", ({loaded, total}) =>{
 
     let fileLoaded = Math.floor((loaded / total) * 100);
@@ -52,22 +55,28 @@ function uploadFile(name){
                             </div>
                           </div>
                         </li>`;
+    uploadedArea.innerHTML = ""; //uncomment this line if you don't want to show upload history
     uploadedArea.classList.add("onprogress");
     progressArea.innerHTML = progressHTML;
-    if(loaded == total){
+    if (loaded == total) {
       progressArea.innerHTML = "";
       let uploadedHTML = `<li class="row">
                             <div class="content upload">
                               <i class="fas fa-file-alt"></i>
                               <div class="details">
-                                <span class="name">${name} • Uploaded</span>
+                                <span class="name">${name} • Ready to Download</span>
                                 <span class="size">${fileSize}</span>
                               </div>
                             </div>
-                            <i class="fas fa-check"></i>
+                            <i class="fas fa-download download-icon"></i>
                           </li>`;
       uploadedArea.classList.remove("onprogress");
-      uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
+      uploadedArea.innerHTML = uploadedHTML; //uncomment this line if you don't want to show upload history
+      // uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
+    
+      // Add a click event listener to the download icon
+      const downloadIcon = uploadedArea.querySelector(".download-icon");
+      downloadIcon.addEventListener("click", downloadFile);
     }
   });
   let data = new FormData(form); //FormData is an object to easily send form data
@@ -105,6 +114,13 @@ function uploadFile(name){
   };
 
   xhr.send(data); //sending form data as the body to the request
+
+  // fetchVideoFile();
+}
+
+function downloadFile() {
+  const downloadURL = "/api/uploadResponse"; // Replace with the correct URL for your Django endpoint
+  window.open(downloadURL, "_blank");
 }
 
 function doNotUploadFile (name, fileSize){
@@ -126,3 +142,6 @@ function doNotUploadFile (name, fileSize){
   uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
   console.log("Created File too large prompt")
 }
+
+
+
