@@ -26,15 +26,6 @@ def upload(request):
 
     print("Received something")
 
-    if getsizeof(request.body) >= 1073741824: 
-        return Response(
-            {
-                'Upload Status': 'Complete', 
-                'Error': "File size is too large. Max size is 1GB."
-            }, 
-            status=status.HTTP_422_UNPROCESSABLE_ENTITY
-        )
-
     with open("tempFile.mp4",'wb+') as f:
         f.write(request.body)
     
@@ -45,4 +36,8 @@ def uploadResponse(request):
     with open("tempFile.mp4", 'rb+') as f:
         print("This is what I'm sending back:")
         print(bool(f.read()))
-    return FileResponse(open("tempFile.mp4", 'rb+'), content_type="video/mp4")
+    response = FileResponse(open("tempFile.mp4", 'rb+'))
+    response["Content-Type"] = "video/mp4"
+    response['Content-Disposition'] = 'inline; filename="tempFile.mp4"'
+
+    return response
