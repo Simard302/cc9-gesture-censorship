@@ -11,5 +11,6 @@ urlpatterns = [
     path('contact',RestCtrl.contact),
     path('index',RestCtrl.index),
     path('upload',RestCtrl.upload),
+    path('uploadResponse',RestCtrl.uploadResponse),
     path('stream',StreamCtrl.stream),
 ]
