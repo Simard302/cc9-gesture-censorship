@@ -1,5 +1,3 @@
-#@markdown We implemented some functions to visualize the hand landmark detection results. <br/> Run the following cell to activate the functions.
-
 from mediapipe import solutions
 from mediapipe.framework.formats import landmark_pb2
 import mediapipe as mp
@@ -41,39 +39,26 @@ LANDMARK_LOOKUP = [
   'PINKY_FINGER_TIP',
 ]
 
-def calc_blur(image, data):
-    if len(data)<1: return None
-    landmarks = data[0]
+def calc_blur(image, landmarks):
     xlen = len(image)
     ylen = len(image[0])
-    c = [(v.x, v.y) for v in landmarks]
-    maxs = np.amax(np.array(c), axis=0)
-    mins = np.amin(np.array(c), axis=0)
-
-    min_pix = [int(max(xlen*mins[1]-xlen//10, 0)), int(max(ylen*mins[0]-ylen//10, 0))]
-    max_pix = [int(min(xlen*maxs[1]+xlen//10, ylen)), int(min(ylen*maxs[0]+ylen//10, ylen))]
 
     blur = cv2.blur(image, (100, 100), 5)
 
     from scipy.stats import kde
-
-    landmarks = data[0]
     x = [v.x for v in landmarks]
     y = [v.y for v in landmarks]
     k = kde.gaussian_kde([x, y])
-    xi, yi = np.mgrid[0:1:xlen//5*1j, 0:1:ylen//5*1j]
+    xi, yi = np.mgrid[0:1:xlen*1j, 0:1:ylen*1j]
     zi = k(np.vstack([yi.flatten(), xi.flatten()]))
 
     scores = np.greater(zi.reshape(xi.shape), 1.5)
 
-    return blur, scores, min_pix, max_pix
+    return blur, scores
 
 def apply_blur(image, blurData):
-    blur, scores, min_pix, max_pix = blurData
-    for x in range(min_pix[0], max_pix[0]-1):
-        for y in range(min_pix[1], max_pix[1]-1):
-            if scores[x//5][y//5]>0:
-                image[x,y] = blur[x,y]
+    blur, scores = blurData
+    image[scores == 1] = blur[scores==1]
 
     return image
 
@@ -84,16 +69,15 @@ def featurize(jpg, detector):
     detection_result = detector.detect(image)
     if len(detection_result.hand_world_landmarks)<1: return None
     features = []
-    for i in range(0, 21):
-        name_landmark = get_landmark_name(i)
-        for k in range(0, 21):
-            distance = get_distance(detection_result.hand_world_landmarks, name_landmark, get_landmark_name(k))
-            features.append(distance)
+    for hand in range(0, len(detection_result.hand_world_landmarks)):
+        for i in range(0, 21):
+            name_landmark = get_landmark_name(i)
+            for k in range(0, 21):
+                    distance = get_distance(detection_result.hand_world_landmarks[hand], name_landmark, get_landmark_name(k))
+                    features.append(distance)
     return features
 
-def get_distance(data, name1, name2):
-  if len(data)<1: return None
-  landmarks = data[0]
+def get_distance(landmarks, name1, name2):
   idx1 = get_landmark_index(name1)
   idx2 = get_landmark_index(name2)
   coords1 = [landmarks[idx1].x, landmarks[idx1].y, landmarks[idx1].z]
@@ -142,7 +126,7 @@ def draw_landmarks_on_image(rgb_image, detection_result, text_override=None):
 
     # Draw handedness (left or right hand) on the image.
     if text_override is not None:
-        text = text_override
+        text = text_override[idx]
     else:
         text = f"{handedness[0].category_name}"
     cv2.putText(annotated_image, text,

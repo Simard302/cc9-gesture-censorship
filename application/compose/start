@@ -4,4 +4,4 @@ echo "Starting Django"
 
 python3 /app/manage.py collectstatic --noinput
 
-gunicorn main.wsgi:application --bind 0.0.0.0:8000
+gunicorn main.wsgi:application --bind 0.0.0.0:8000 --timeout 99999
