@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from django.http import FileResponse
 from sys import getsizeof
 
 @api_view(['GET'])
@@ -20,7 +21,8 @@ def index(request):
 
 @api_view(['POST','GET'])
 def upload(request):
-    if request.method == 'GET': return Response(None, status=status.HTTP_204_NO_CONTENT)
+    if request.method == 'GET': 
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
 
     print("Received something")
 
@@ -33,7 +35,14 @@ def upload(request):
             status=status.HTTP_422_UNPROCESSABLE_ENTITY
         )
 
-    with open("tempFile.txt",'wb+') as f:
+    with open("tempFile.mp4",'wb+') as f:
         f.write(request.body)
-
+    
     return Response({'Upload Status': 'Complete'}, status=status.HTTP_200_OK)
+
+@api_view(["GET"])
+def uploadResponse(request):
+    with open("tempFile.mp4", 'rb+') as f:
+        print("This is what I'm sending back:")
+        print(bool(f.read()))
+    return FileResponse(open("tempFile.mp4", 'rb+'), content_type="video/mp4")
