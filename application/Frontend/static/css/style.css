@@ -44,7 +44,7 @@ h1{
 }
 
 #using-ai{
-  color:#000000;
+  color:#BBBBBB;
   text-align:left;
   vertical-align:text-top;
   font-size:128px;
@@ -52,11 +52,12 @@ h1{
   padding-left: 18%;
   border-style:hidden;
   outline:none;
+  margin-bottom: 0;
   
 }
 
 #to-create{
-  color:#000000;
+  color:#BBBBBB;
   text-align:left;
   vertical-align:auto;
   font-family:Inter;
@@ -65,13 +66,13 @@ h1{
   border-style:hidden;
   outline:none;
   position: absolute;
-  padding-top: 1px;
+  padding-bottom: 300px;
   left: 40%;
-  
+  margin-top: 0;
 }
 
 #a-better-world{
-  color:#000000;
+  color:#BBBBBB;
   text-align:left;
   vertical-align:text-top;
   font-size:128px;
