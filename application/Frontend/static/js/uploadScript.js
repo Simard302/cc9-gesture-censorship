@@ -3,10 +3,16 @@ fileInput = document.querySelector(".file-input"),
 progressArea = document.querySelector(".progress-area"),
 uploadedArea = document.querySelector(".uploaded-area");
 
+// window.addEventListener("load", () => {
+//   // playButton.style.display = "none";
+//   // fileIcon.style.display = "none";
+// });
 
 form.addEventListener("click", () =>{
   fileInput.click();
 });
+
+
 
 fileInput.onchange = ({target})=>{
   let file = target.files[0];
@@ -34,6 +40,7 @@ function uploadFile(name){
   xhr.open("POST", "api/upload"); // opens request
   console.log("POSTED");
 
+
   xhr.upload.addEventListener("progress", ({loaded, total}) =>{
 
     let fileLoaded = Math.floor((loaded / total) * 100);
@@ -55,26 +62,35 @@ function uploadFile(name){
                         </li>`;
     uploadedArea.classList.add("onprogress");
     progressArea.innerHTML = progressHTML;
-    if(loaded == total){
+    if (loaded == total) {
       progressArea.innerHTML = "";
       let uploadedHTML = `<li class="row">
                             <div class="content upload">
                               <i class="fas fa-file-alt"></i>
                               <div class="details">
-                                <span class="name">${name} • Uploaded</span>
+                                <span class="name">${name} • Ready to Download</span>
                                 <span class="size">${fileSize}</span>
                               </div>
                             </div>
-                            <i class="fas fa-check"></i>
+                            <i class="fas fa-download download-icon"></i>
                           </li>`;
       uploadedArea.classList.remove("onprogress");
       uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
+    
+      // Add a click event listener to the download icon
+      const downloadIcon = uploadedArea.querySelector(".download-icon");
+      downloadIcon.addEventListener("click", downloadFile);
     }
   });
   let data = new FormData(form); //FormData is an object to easily send form data
   xhr.send(data); //sending form data as the body to the request
 
-  fetchVideoFile();
+  // fetchVideoFile();
+}
+
+function downloadFile() {
+  const downloadURL = "/api/uploadResponse"; // Replace with the correct URL for your Django endpoint
+  window.open(downloadURL, "_blank");
 }
 
 function doNotUploadFile (name, fileSize){
@@ -105,26 +121,49 @@ function doNotUploadFile (name, fileSize){
 
 
 
-const videoPlayer = document.getElementById("video-player");
-const playButton = document.getElementById("play-button");
-// var playPromise = document.querySelector("video").play();
+// const videoPlayer = document.getElementById("video-player");
+// const playButton = document.getElementById("play-button");
+// // var playPromise = document.querySelector("video").play();
 
-playButton.addEventListener("click", function() {
-  playVideo();
-});
+// playButton.addEventListener("click", function() {
+//   playVideo();
+// });
+
+// // function fetchVideoFile() {
+// //   console.log("Attempting to fetch");
+// //   fetch("api/uploadResponse")
+// //     .then(response => {
+// //       console.log(`Response type ${response.type}`);
+// //       return response.blob();
+// //     })
+// //     .then(blob => {
+// //       console.log(blob);
+// //       // videoPlayer.src = URL.createObjectURL(blob);
+// //       const urlCreator = window.URL || window.webkitURL;
+// //       videoPlayer.src = urlCreator.createObjectURL(blob);
+// //       console.log(videoPlayer.src);
+// //       videoPlayer.load();
+
+// //       console.log("Loaded Video");
+// //       playButton.style.display = "block";
+// //     })
+// //     .catch(error => {
+// //       console.error("Error fetching video file:", error);
+// //     });
+// // }
+
 
 // function fetchVideoFile() {
 //   console.log("Attempting to fetch");
 //   fetch("api/uploadResponse")
 //     .then(response => {
 //       console.log(`Response type ${response.type}`);
-//       return response.blob();
+//       return response.arrayBuffer();
 //     })
-//     .then(blob => {
-//       console.log(blob);
-//       // videoPlayer.src = URL.createObjectURL(blob);
-//       const urlCreator = window.URL || window.webkitURL;
-//       videoPlayer.src = urlCreator.createObjectURL(blob);
+//     .then(arrayBuffer => {
+//       const blob = new Blob([arrayBuffer], { type: "video/mp4" });
+//       const videoURL = URL.createObjectURL(blob);
+//       videoPlayer.src = videoURL;
 //       console.log(videoPlayer.src);
 //       videoPlayer.load();
 
@@ -137,37 +176,17 @@ playButton.addEventListener("click", function() {
 // }
 
 
-function fetchVideoFile() {
-  console.log("Attempting to fetch");
-  fetch("api/uploadResponse")
-    .then(response => {
-      console.log(`Response type ${response.type}`);
-      return response.arrayBuffer();
-    })
-    .then(arrayBuffer => {
-      const blob = new Blob([arrayBuffer], { type: "video/mp4" });
-      const videoURL = URL.createObjectURL(blob);
-      videoPlayer.src = videoURL;
-      console.log(videoPlayer.src);
-      videoPlayer.load();
-
-      console.log("Loaded Video");
-      playButton.style.display = "block";
-    })
-    .catch(error => {
-      console.error("Error fetching video file:", error);
-    });
-}
+// function playVideo() {
+//   videoPlayer.play().then(function() {
+//     // Playback started
+//     playButton.style.display = "none";
+//   }).catch(function(error) {
+//     // Handle playback error
+//     console.error("Error playing video:", error);
+//   });
+// }
 
 
-function playVideo() {
-  videoPlayer.play().then(function() {
-    // Playback started
-    playButton.style.display = "none";
-  }).catch(function(error) {
-    // Handle playback error
-    console.error("Error playing video:", error);
-  });
-}
 
-window.addEventListener("load", () => {playButton.style.display = "none";});
+
+

@@ -2,7 +2,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.http import FileResponse
-from sys import getsizeof
+import os
+videoPath = "tempFile.mp4"
 
 @api_view(['GET'])
 def about(request):
@@ -26,18 +27,22 @@ def upload(request):
 
     print("Received something")
 
-    with open("tempFile.mp4",'wb+') as f:
+    with open(videoPath,'wb+') as f:
         f.write(request.body)
     
     return Response({'Upload Status': 'Complete'}, status=status.HTTP_200_OK)
 
 @api_view(["GET"])
 def uploadResponse(request):
-    with open("tempFile.mp4", 'rb+') as f:
+    
+
+    with open(videoPath, 'rb+') as f:
         print("This is what I'm sending back:")
         print(bool(f.read()))
-    response = FileResponse(open("tempFile.mp4", 'rb+'))
+
+    response = FileResponse(open(videoPath, 'rb+'))
     response["Content-Type"] = "video/mp4"
-    response['Content-Disposition'] = 'inline; filename="tempFile.mp4"'
+    response['Content-Disposition'] = f'inline; filename={videoPath}'
+    response['Content-Disposition'] = 'attachment; filename="{0}"'.format(os.path.basename(videoPath))
 
     return response
