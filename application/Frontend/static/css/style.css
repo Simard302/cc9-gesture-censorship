@@ -15,6 +15,7 @@
 li{
   display: inline;
   font-family: Poppins, sans-serif;
+  font-size: 24px;
 }
 
 h1{
@@ -22,7 +23,7 @@ h1{
   padding-top: 5%;
   padding-left: 10%;
   color: #49C6DD;
-  font-size: 32px;
+  font-size: 64px;
 }
 
 .nav-element{
@@ -40,5 +41,72 @@ h1{
   text-align: right;
   list-style-type: none;
   padding-top: 100px;
+}
+
+#using-ai{
+  color:#BBBBBB;
+  text-align:left;
+  vertical-align:text-top;
+  font-size:128px;
+  font-family:Inter;
+  padding-left: 18%;
+  border-style:hidden;
+  outline:none;
+  margin-bottom: 0;
+  
+}
+
+#to-create{
+  color:#BBBBBB;
+  text-align:left;
+  vertical-align:auto;
+  font-family:Inter;
+  font-size:128px;
+  line-height: auto;
+  border-style:hidden;
+  outline:none;
+  position: absolute;
+  padding-bottom: 300px;
+  left: 40%;
+  margin-top: 0;
+}
+
+#a-better-world{
+  color:#BBBBBB;
+  text-align:left;
+  vertical-align:text-top;
+  font-size:128px;
+  font-family:Inter;
+  left:10%;
+  top:579px;
+  height:155px;
+  position:absolute;
+
+  border-style:hidden;
+  outline:none;
+}
+
+p{
+  color:#000000;
+  text-align:left;
+  vertical-align:text-top;
+  font-size:24px;
+  font-family:Inter;
+  left:792px;
+  top:764px;
+  width:546px;
+  height:200px;
+  position:absolute;
+  line-height:40px;
+  border-style:hidden;
+  outline:none;
+}
+
+img{
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  left:70%;
+  top: 80%;
 }
 
