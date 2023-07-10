@@ -3,6 +3,9 @@ Our goal is to censor gestures. To recognize the landmarks, we used Google’s m
 
 The repository also includes a website made with Django for uploading files to censor. It comes with a dockerfile to create a stateless image which can be easily deployed with Google Cloud Run (example commands in application/deploy.sh)
 
+# Web demo
+[Code Cloud 9 -- Video Censor](https://video-censor.codecloud9.dev/index)
+
 # Contributors 
 - Adam Simard
 - Zuhayr Mahmood
