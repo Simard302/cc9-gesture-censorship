@@ -24,7 +24,7 @@ fileInput.onchange = ({target})=>{
       uploadFile(fileName);
     }
   }
-}
+} 
 
 function uploadFile(name){
   console.log("Running Upload");
