@@ -7,7 +7,7 @@ The repository also includes a website made with Django for uploading files to c
 [CodeCloud9 - Google Cloud Vertex AI Hackathon (LabLab.ai)](https://www.youtube.com/watch?v=8joYMFchrZo)
 
 # Web demo
-[Code Cloud 9 -- Video Censor](https://video-censor.codecloud9.dev/index)
+Code Cloud 9 -- Video Censor [Disabled]
 
 # Contributors 
 - Adam Simard
